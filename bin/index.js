@@ -204,6 +204,7 @@ var tagger = function(sortedTags, data) {
     currTag = tag;
   }
   if (!currTag) currTag = {name: opts.tagName, date: currentDate};
+  if (prevTag === currTag) prevTag = null;
   return { currTag: currTag, prevTag: prevTag };
 };
 
