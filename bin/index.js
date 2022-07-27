@@ -122,7 +122,7 @@ var getTags = function(){
         , repo: tagOpts.repo
         , ref: ref.commit.sha
       }).then(function({data: commit}){
-        opts.verbose && console.log('pulled commit data for tag - ', ref.name);
+        opts.verbose && console.log(`pulled commit data for tag - ${ref.name} (${commit.commit.committer.date})`);
         var tag = {
             name: ref.name
           , date: moment(commit.commit.committer.date)
@@ -452,6 +452,12 @@ var task = function() {
     })
     .spread(function(tags, data){
       allTags = _.sortBy(tags, 'date').reverse();
+
+      console.log('------ Tags ------')
+      _.each(allTags, tag => console.log({ name: tag.name, date: String(tag.date) }))
+      console.log('------ PRs ------')
+      _.each(data, pr => console.log({ title: pr.title, merged_at: String(pr.merged_at) }))
+      console.log('------ Combined ------')
       return data;
     })
     .map(function(data){
@@ -459,6 +465,7 @@ var task = function() {
       data.prevTag = tagInfo.prevTag;
       data.tag = tagInfo.currTag;
       data.tagDate = data.tag.date;
+      console.log({ tag: { name: data.tag.name, date: String(data.tag.date) }, prevTag: { name: data.prevTag.name, date: String(data.prevTag.date) }, tagDate: String(data.tagDate) })
       return data;
     })
     .then(function(data){
