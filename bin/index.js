@@ -226,7 +226,13 @@ var tagger = function(sortedTags, data) {
   for (var i=0, len=sortedTags.length; i < len; i++) {
     var tag = sortedTags[i];
     prevTag = tag;
-    if (tag.date < date) break;
+
+    var tagDate = tag.date;
+
+    // Fix: 發佈了才按 merge
+    if (data.merged_at === '2019-05-02T09:18:28Z') tagDate = tagDate.add(10, 'seconds') // Fix: in_batches v1.0.0
+    if (data.merged_at === '2022-07-22T14:11:21Z') tagDate = tagDate.add(5, 'minutes') // Fix: adaptive_alias v0.0.1
+    if (tagDate < date) break;
     currTag = tag;
   }
   if (!currTag) currTag = {name: opts.tagName, date: currentDate};
@@ -465,7 +471,12 @@ var task = function() {
       data.prevTag = tagInfo.prevTag;
       data.tag = tagInfo.currTag;
       data.tagDate = data.tag.date;
-      console.log({ tag: { name: data.tag.name, date: String(data.tag.date) }, prevTag: { name: data.prevTag.name, date: String(data.prevTag.date) }, tagDate: String(data.tagDate) })
+      console.log({
+        title: data.title,
+        merged_at: String(data.merged_at),
+        tag: { name: data.tag.name, date: String(data.tag.date) },
+        prevTag: data.prevTag ? { name: data.prevTag.name, date: String(data.prevTag.date) } : null,
+      })
       return data;
     })
     .then(function(data){
