@@ -233,6 +233,7 @@ var tagger = function(sortedTags, data) {
     if (data.merged_at === '2019-05-02T09:18:28Z') tagDate = tagDate.add(10, 'seconds') // Fix: in_batches v1.0.0
     if (data.merged_at === '2022-07-22T14:11:21Z') tagDate = tagDate.add(5, 'minutes') // Fix: adaptive_alias v0.0.1
     if (data.merged_at === '2021-01-10T15:41:05Z') tagDate = tagDate.add(2, 'seconds') // Fix: deep_pluck v1.1.5
+    if (data.merged_at === '2017-03-04T05:47:31Z') tagDate = tagDate.add(2, 'seconds') // Fix: deep_pluck v0.0.1
 
     if (tagDate < date) break;
     currTag = tag;
