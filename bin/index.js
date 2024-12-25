@@ -83,7 +83,7 @@ var token = null;
 
 // ~/.config/changelog.json will store the token
 var authOptions = {
-  clientId   : '899aa18ee35dbb76c97c'
+  clientId   : 'Iv23lioMJKUJbC2ojjQS'
 , configName : 'changelog'
 , scopes     : ['user', 'public_repo', 'repo']
 };
